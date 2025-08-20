@@ -35,16 +35,16 @@ function mostrarPersona() {
     ventanas[aleatorio].animate(cuadros, opciones);*/
     ventanas[aleatorio].offsetWidth = "";
     ventanas[aleatorio].classList.add("mostrarPersona");
-    ventanas[aleatorio].addEventListener("animationend", () => console.log("hola"));
+    
 
-    //ventanas[aleatorio].addEventListener("animationend", quitarPersona);
+    ventanas[aleatorio].addEventListener("animationend", quitarPersona);
 
 }
 
 function quitarPersona(evt){
     evt.currentTarget.dataset.ocupada = "false";
     evt.currentTarget.classList.remove("mostrarPersona");
-    console.log("si");
+    evt.currentTarget.style.backgroundImage = "none";
 }
 
 setInterval(mostrarPersona, 1000);
