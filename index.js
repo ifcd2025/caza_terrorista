@@ -1,4 +1,5 @@
-const NUMERO_IMAGENES_PERSONAS = 10;
+const NUMERO_IMAGENES_PERSONAS = 13;
+//const 
 
 const main = document.getElementById("edificio");
 for(let f = 1; f < 7; f++) {
@@ -27,17 +28,23 @@ function mostrarPersona() {
     ventanas[aleatorio].style.backgroundImage = `url(imagenes/p${numeroImagen}.png)`;
     // dataset vale para crear propiedades propias a nuestros elementos
     ventanas[aleatorio].dataset.ocupada = "true";
-    const cuadros = [
+   /* const cuadros = [
         {backgroundImage: "none", offset: 1}
     ];
     const opciones = {duration: 3000, fill: "forwards"};
-    ventanas[aleatorio].animate(cuadros, opciones);
-    ventanas[aleatorio].addEventListener("animationend", quitarPersona);
+    ventanas[aleatorio].animate(cuadros, opciones);*/
+    ventanas[aleatorio].offsetWidth = "";
+    ventanas[aleatorio].classList.add("mostrarPersona");
+    ventanas[aleatorio].addEventListener("animationend", () => console.log("hola"));
+
+    //ventanas[aleatorio].addEventListener("animationend", quitarPersona);
 
 }
 
 function quitarPersona(evt){
     evt.currentTarget.dataset.ocupada = "false";
+    evt.currentTarget.classList.remove("mostrarPersona");
+    console.log("si");
 }
 
 setInterval(mostrarPersona, 1000);

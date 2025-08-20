@@ -17,4 +17,22 @@
     width: 128px;
     height: 128px;
     background-color: black;
+    overflow: hidden;
+    background-repeat: no-repeat;
+}
+
+.mostrarPersona {
+    animation: animacionMostrarPersona 3s forwards;
+}
+@keyframes animacionMostrarPersona {
+    0% {
+        background-position-y: 128px;
+    }
+    50% {
+        background-position-y: 0;
+    }
+    100% {
+        background-position-y: 128px;
+        
+    }
 }
