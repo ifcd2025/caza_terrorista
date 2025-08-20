@@ -22,7 +22,7 @@
 }
 
 .mostrarPersona {
-    animation: animacionMostrarPersona 3s forwards;
+    animation: animacionMostrarPersona 3s forwards linear;
 }
 @keyframes animacionMostrarPersona {
     0% {
