@@ -1,5 +1,6 @@
 const NUMERO_IMAGENES_PERSONAS = 13;
-//const 
+// los terroristas son p10.png, p11.png, ....
+const NUMERO_INICIAL_TERRORISTA = 10;
 
 const main = document.getElementById("edificio");
 for(let f = 1; f < 7; f++) {
@@ -11,8 +12,19 @@ for(let f = 1; f < 7; f++) {
     }
 }
 
-function ventanaPulsada() {
-
+function ventanaPulsada(evt) {
+    const ventana = evt.currentTarget;
+    if(ventana.dataset.ocupada != "true") {
+        return;
+    }
+    if(ventana.dataset.terrorista == "true") {
+        ventana.style.backgroundColor = "green";
+    } else {
+        ventana.style.backgroundColor = "red";
+    }
+    ventana.dataset.ocupada = "false";
+    ventana.classList.remove("mostrarPersona");
+    ventana.style.backgroundImage = "none";
 }
 
 function mostrarPersona() {
@@ -28,6 +40,12 @@ function mostrarPersona() {
     ventanas[aleatorio].style.backgroundImage = `url(imagenes/p${numeroImagen}.png)`;
     // dataset vale para crear propiedades propias a nuestros elementos
     ventanas[aleatorio].dataset.ocupada = "true";
+    if(numeroImagen >= NUMERO_INICIAL_TERRORISTA) {
+        ventanas[aleatorio].dataset.terrorista = "true";
+    } else {
+        ventanas[aleatorio].dataset.terrorista = "false";
+    }
+
    /* const cuadros = [
         {backgroundImage: "none", offset: 1}
     ];
@@ -35,8 +53,6 @@ function mostrarPersona() {
     ventanas[aleatorio].animate(cuadros, opciones);*/
     ventanas[aleatorio].offsetWidth = "";
     ventanas[aleatorio].classList.add("mostrarPersona");
-    
-
     ventanas[aleatorio].addEventListener("animationend", quitarPersona);
 
 }
@@ -45,6 +61,12 @@ function quitarPersona(evt){
     evt.currentTarget.dataset.ocupada = "false";
     evt.currentTarget.classList.remove("mostrarPersona");
     evt.currentTarget.style.backgroundImage = "none";
+    if(evt.currentTarget.dataset.terrorista == "true") {
+        document.body.style.backgroundColor = "red";
+    }
 }
 
-setInterval(mostrarPersona, 1000);
+window.addEventListener("blur", () => clearInterval(reloj));
+window.addEventListener("focus", () => reloj = setInterval(mostrarPersona, 1000));
+
+//let reloj =setInterval(mostrarPersona, 1000);
