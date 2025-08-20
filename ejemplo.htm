@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Caza al terrorista</title>
+   <!-- imágenes del flaticon.com-->
+    <style>
+        #edificio {
+            background-color: brown;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            border: 20px solid brown;
+        }
+        .ventana {
+            background-color: white;
+            height: 60px;
+            min-width: 60px;
+            background-size: contain;
+        }
+        @keyframes animacion {
+            99% {
+                background-size: contain;
+            }
+            100% {
+                background-size: 0;
+            }
+        }
+         @keyframes animacionAcierto {
+            50% {
+                background-color: green;
+            }
+        }
+      @keyframes animacionFallo{
+            50% {
+                background-color: red;
+            }
+        }        
+    </style>
+</head>
+<body>
+    <header><h1>Caza al terrorista</h1></header>
+    <main>
+        <div id="edificio">
+           
+        </div>
+    </main>
+
+    <script>
+        const NUMERO_VENTANAS = 100;
+        const NUMERO_FOTOS = 10;
+        const NUMERO_TERRORISTA = 10;
+        const edificio = document.getElementById("edificio");
+        edificio.addEventListener("click", comprobar);
+        for(let i = 1; i <= NUMERO_VENTANAS; i++) {
+            const ventana = document.createElement("div");
+            edificio.appendChild(ventana);
+            ventana.dataset.persona = "";
+            ventana.id= "v" + i;
+            ventana.classList.add("ventana");
+            
+        }
+
+        let reloj = setInterval(mostrar, 1000);
+
+        const ventanasActuales = [];
+        const header = document.querySelector("header");
+
+        function comprobar(evt) {
+            if(evt.target.classList.contains("ventana")) {
+                console.log(evt.target.dataset.persona);
+                if(evt.target.dataset.persona == NUMERO_TERRORISTA) {
+                    header.style.animation = "";
+                    header.offsetWidth;
+                    evt.target.dataset.persona = "";
+                    header.style.animation = "animacionAcierto .5s";
+                    evt.target.dataset.persona = "";
+                } else if(evt.target.dataset.persona != "" ){
+                    evt.target.dataset.persona = "";
+                    header.style.animation = "";
+                    header.offsetWidth;
+                    header.style.animation = "animacionFallo .5s";
+
+                }
+            }
+        }
+        function mostrar() {
+            let numero;
+            do {
+                numero = Math.floor(Math.random() * NUMERO_VENTANAS ) + 1;
+            } while(ventanasActuales.indexOf(numero) != -1);
+            ventanasActuales.push(numero);
+            const ventana = document.getElementById("v" + numero);
+            const persona = Math.floor(Math.random() * NUMERO_FOTOS ) + 1;
+            ventana.style.backgroundImage = `url('imagenes/p${persona}.png')`;
+            ventana.dataset.persona = persona;
+            ventana.style.animation = "";
+            ventana.offsetWidth;
+            ventana.style.animation = "animacion 2s";
+            ventana.addEventListener("animationend", () => {
+                ventanasActuales.splice(ventanasActuales.indexOf(numero), 1);
+                ventana.dataset.persona = "";
+                ventana.style.backgroundImage = "none";
+                if(ventana.dataset.persona == NUMERO_TERRORISTA) {
+                    document.body.style.backgroundColor = "red";
+                    clearInterval(reloj);
+                }
+            })
+        }
+    </script>
+</body>
+</html>
